@@ -8,7 +8,14 @@ import Pagination from '@/components/common/Pagination';
 import ConfirmDialog from '@/components/common/ConfirmDialog';
 import { useTasks, useCreateTask, useUpdateTask, useDeleteTask } from '@/hooks/useTasks';
 import { useDebounce } from '@/hooks/useDebounce';
-import type { TaskFilters, Task, CreateTaskInput } from '@/types';
+import type { TaskFilters, Task, CreateTaskInput, TaskStatus } from '@/types';
+
+const STATUS_BUTTONS: Array<{ value: TaskStatus | 'all'; label: string }> = [
+  { value: 'all', label: 'All' },
+  { value: 'Todo', label: 'To-Do' },
+  { value: 'In Progress', label: 'In-Progress' },
+  { value: 'Done', label: 'Completed' },
+];
 
 export default function DashboardPage() {
   useEffect(() => { document.title = 'Dashboard — TaskFlow'; }, []);
@@ -30,7 +37,7 @@ export default function DashboardPage() {
     [filters, debouncedSearch],
   );
 
-  const { data, isLoading } = useTasks(queryFilters);
+  const { data, isLoading, isFetching } = useTasks(queryFilters);
   const { mutate: createTask, isPending: isCreating } = useCreateTask();
   const { mutate: updateTask, isPending: isUpdating } = useUpdateTask();
   const { mutate: deleteTask, isPending: isDeleting } = useDeleteTask();
@@ -82,24 +89,84 @@ export default function DashboardPage() {
     deleteTask(deletingId, { onSettled: () => setDeletingId(null) });
   };
 
+  const handleStatusFilterChange = useCallback((status: TaskStatus | 'all') => {
+    setFilters((current) => ({
+      ...current,
+      page: 1,
+      status: status === 'all' ? undefined : status,
+    }));
+  }, []);
+
   return (
     <div className="space-y-4 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex flex-col gap-2 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:items-start xl:gap-3">
+        {/* Title row — always visible */}
+        <div className="min-h-[40px] xl:min-h-[56px]">
           <h2 className="text-xl font-semibold">My Tasks</h2>
-          {data && (
+          {data ? (
             <p className="text-sm text-muted-foreground">
               {data.pagination.total} task{data.pagination.total !== 1 ? 's' : ''} total
             </p>
+          ) : (
+            <p className="text-sm text-transparent select-none">0 tasks total</p>
           )}
         </div>
+
+        {/* Small + Medium: single scrollable row with status buttons + new-task button */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden xl:hidden">
+          {STATUS_BUTTONS.map(({ value, label }) => {
+            const isActive = (filters.status ?? 'all') === value;
+            return (
+              <Button
+                key={value}
+                type="button"
+                variant={isActive ? 'default' : 'outline'}
+                size="sm"
+                className="h-8 shrink-0 px-3 text-xs sm:h-9 sm:px-4 sm:text-sm"
+                onClick={() => handleStatusFilterChange(value)}
+              >
+                {label}
+              </Button>
+            );
+          })}
+
+          {/* Medium: full label; Small: icon only */}
+          <Button
+            size="sm"
+            className="h-8 shrink-0 px-2 sm:h-9 sm:px-3"
+            onClick={() => { setEditingTask(null); setFormOpen(true); }}
+            title="Ctrl+K"
+          >
+            <Plus className="h-4 w-4" />
+            <span className="sr-only sm:not-sr-only sm:ml-1.5 sm:text-sm">New task</span>
+          </Button>
+        </div>
+
+        {/* Large (xl+): status buttons in center column — unchanged */}
+        <div className="hidden xl:flex xl:items-center xl:justify-center xl:gap-2 xl:pt-0.5">
+          {STATUS_BUTTONS.map(({ value, label }) => {
+            const isActive = (filters.status ?? 'all') === value;
+            return (
+              <Button
+                key={value}
+                type="button"
+                variant={isActive ? 'default' : 'outline'}
+                size="sm"
+                className="min-w-[110px]"
+                onClick={() => handleStatusFilterChange(value)}
+              >
+                {label}
+              </Button>
+            );
+          })}
+        </div>
+
+        {/* Large (xl+): New task on the right — unchanged */}
         <Button
+          className="hidden xl:inline-flex xl:justify-self-end"
           size="sm"
-          onClick={() => {
-            setEditingTask(null);
-            setFormOpen(true);
-          }}
+          onClick={() => { setEditingTask(null); setFormOpen(true); }}
           title="Ctrl+K"
         >
           <Plus className="mr-1.5 h-4 w-4" />
@@ -109,6 +176,8 @@ export default function DashboardPage() {
 
       {/* Filters */}
       <TaskFiltersBar filters={filters} onChange={setFilters} />
+
+      {/* No loading indicator when updating tasks */}
 
       {/* Task grid */}
       <TaskList

@@ -15,6 +15,7 @@ export function useTasks(filters?: TaskFilters) {
   return useQuery({
     queryKey: [TASKS_KEY, filters],
     queryFn: () => getTasks(filters),
+    placeholderData: (previousData) => previousData,
   });
 }
 

@@ -32,14 +32,15 @@ export default function Sidebar({ onClose }: SidebarProps) {
   });
 
   return (
-    <aside className="flex h-full flex-col bg-card border-r">
+    <aside className="flex h-screen flex-col bg-card border-r">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-6 py-5">
+      <div className="flex items-center gap-2 px-6" style={{ minHeight: '63px' }}>
         <CheckSquare className="h-6 w-6 text-primary" />
         <span className="text-lg font-bold tracking-tight">TaskFlow</span>
       </div>
 
-      <Separator />
+      {/* Full-height vertical separator */}
+      <Separator className="w-full" />
 
       {/* Navigation */}
       <nav className="flex-1 space-y-1 px-3 py-4">
@@ -63,7 +64,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
         ))}
       </nav>
 
-      <Separator />
+      <Separator className="w-full" />
 
       {/* User info + logout */}
       <div className="px-4 py-4 space-y-3">
