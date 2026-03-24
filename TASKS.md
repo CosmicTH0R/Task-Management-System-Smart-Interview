@@ -98,11 +98,11 @@
 ## Phase 7: Authentication UI
 > *5 tasks — Login/Signup pages with validation and protected routing.*
 
-- [ ] **7.01** Create `src/pages/LoginPage.tsx` — Email + password form using Shadcn Input + Button, Zod client-side validation (react-hook-form + @hookform/resolvers), mutation via React Query, redirect to dashboard on success
-- [ ] **7.02** Create `src/pages/SignupPage.tsx` — Name + email + password + confirm password form, same pattern as login, redirect to login on success
-- [ ] **7.03** Create `src/components/common/ProtectedRoute.tsx` — Wrapper that checks `useAuthStore.isAuthenticated`, redirects to `/login` if not
-- [ ] **7.04** Create `src/components/common/GuestRoute.tsx` — Redirects authenticated users to `/dashboard`
-- [ ] **7.05** Implement **auto-login on refresh**: call `GET /api/auth/me` on app mount, populate auth store if cookie is valid
+- [x] **7.01** Create `src/pages/LoginPage.tsx` — Email + password form using Shadcn Input + Button, Zod client-side validation (react-hook-form + @hookform/resolvers), mutation via React Query, redirect to dashboard on success
+- [x] **7.02** Create `src/pages/SignupPage.tsx` — Name + email + password + confirm password form, same pattern as login, redirect to login on success
+- [x] **7.03** Create `src/components/common/ProtectedRoute.tsx` — Wrapper that checks `useAuthStore.isAuthenticated`, redirects to `/login` if not
+- [x] **7.04** Create `src/components/common/GuestRoute.tsx` — Redirects authenticated users to `/dashboard`
+- [x] **7.05** Implement **auto-login on refresh**: call `GET /api/auth/me` on app mount, populate auth store if cookie is valid
 
 ---
 
