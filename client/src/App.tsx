@@ -4,21 +4,29 @@ import { useAuthStore } from '@/store/authStore';
 import { getMe } from '@/api/auth.api';
 import ProtectedRoute from '@/components/common/ProtectedRoute';
 import GuestRoute from '@/components/common/GuestRoute';
+import DashboardLayout from '@/components/layout/DashboardLayout';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
 
-// Placeholder until Phase 8/9 pages are built
-function DashboardPage() {
+// Placeholder pages — replaced in Phase 9/10
+function DashboardIndex() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <h1 className="text-2xl font-bold">Dashboard (Coming in Phase 8)</h1>
+    <div className="flex h-full items-center justify-center">
+      <p className="text-muted-foreground">Dashboard coming soon (Phase 9)</p>
+    </div>
+  );
+}
+function AnalyticsIndex() {
+  return (
+    <div className="flex h-full items-center justify-center">
+      <p className="text-muted-foreground">Analytics coming soon (Phase 10)</p>
     </div>
   );
 }
 function NotFoundPage() {
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <h1 className="text-2xl font-bold">404 - Not Found</h1>
+      <h1 className="text-2xl font-bold">404 — Page not found</h1>
     </div>
   );
 }
@@ -27,7 +35,6 @@ export default function App() {
   const setUser = useAuthStore((s) => s.setUser);
   const logout = useAuthStore((s) => s.logout);
 
-  // Auto-login on refresh: verify JWT cookie with server
   useEffect(() => {
     getMe()
       .then((user) => setUser(user))
@@ -36,30 +43,23 @@ export default function App() {
 
   return (
     <Routes>
+      {/* Guest-only routes */}
+      <Route path="/login" element={<GuestRoute><LoginPage /></GuestRoute>} />
+      <Route path="/signup" element={<GuestRoute><SignupPage /></GuestRoute>} />
+
+      {/* Protected routes with dashboard layout */}
       <Route
-        path="/login"
-        element={
-          <GuestRoute>
-            <LoginPage />
-          </GuestRoute>
-        }
-      />
-      <Route
-        path="/signup"
-        element={
-          <GuestRoute>
-            <SignupPage />
-          </GuestRoute>
-        }
-      />
-      <Route
-        path="/dashboard"
         element={
           <ProtectedRoute>
-            <DashboardPage />
+            <DashboardLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/dashboard" element={<DashboardIndex />} />
+        <Route path="/analytics" element={<AnalyticsIndex />} />
+      </Route>
+
+      {/* Redirects */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

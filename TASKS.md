@@ -109,11 +109,11 @@
 ## Phase 8: Dashboard Layout & Navigation
 > *5 tasks — Clean responsive layout with sidebar/navbar and dark mode.*
 
-- [ ] **8.01** Create `src/components/layout/DashboardLayout.tsx` — Sidebar + main content area layout with responsive behavior (sidebar collapses to hamburger on mobile)
-- [ ] **8.02** Create `src/components/layout/Sidebar.tsx` — Navigation links (Dashboard, Analytics), user info at bottom, logout button
-- [ ] **8.03** Create `src/components/layout/Navbar.tsx` — Mobile hamburger menu trigger, page title, theme toggle, user avatar/dropdown
-- [ ] **8.04** Create `src/components/common/ThemeToggle.tsx` — Dark/light mode toggle using Tailwind `dark:` classes, persist preference in `localStorage`
-- [ ] **8.05** Configure Tailwind `darkMode: 'class'`, apply dark mode styles globally (background, text, card, border colors)
+- [x] **8.01** Create `src/components/layout/DashboardLayout.tsx` — Sidebar + main content area layout with responsive behavior (sidebar collapses to hamburger on mobile)
+- [x] **8.02** Create `src/components/layout/Sidebar.tsx` — Navigation links (Dashboard, Analytics), user info at bottom, logout button
+- [x] **8.03** Create `src/components/layout/Navbar.tsx` — Mobile hamburger menu trigger, page title, theme toggle, user avatar/dropdown
+- [x] **8.04** Create `src/components/common/ThemeToggle.tsx` — Dark/light mode toggle using Tailwind `dark:` classes, persist preference in `localStorage`
+- [x] **8.05** Configure Tailwind `darkMode: 'class'`, apply dark mode styles globally (background, text, card, border colors)
 
 ---
 
