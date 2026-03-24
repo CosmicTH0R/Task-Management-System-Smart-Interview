@@ -7,15 +7,9 @@ import GuestRoute from '@/components/common/GuestRoute';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
+import DashboardPage from '@/pages/DashboardPage';
 
-// Placeholder pages — replaced in Phase 9/10
-function DashboardIndex() {
-  return (
-    <div className="flex h-full items-center justify-center">
-      <p className="text-muted-foreground">Dashboard coming soon (Phase 9)</p>
-    </div>
-  );
-}
+// Placeholder — replaced in Phase 10
 function AnalyticsIndex() {
   return (
     <div className="flex h-full items-center justify-center">
@@ -43,11 +37,9 @@ export default function App() {
 
   return (
     <Routes>
-      {/* Guest-only routes */}
       <Route path="/login" element={<GuestRoute><LoginPage /></GuestRoute>} />
       <Route path="/signup" element={<GuestRoute><SignupPage /></GuestRoute>} />
 
-      {/* Protected routes with dashboard layout */}
       <Route
         element={
           <ProtectedRoute>
@@ -55,11 +47,10 @@ export default function App() {
           </ProtectedRoute>
         }
       >
-        <Route path="/dashboard" element={<DashboardIndex />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/analytics" element={<AnalyticsIndex />} />
       </Route>
 
-      {/* Redirects */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

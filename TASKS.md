@@ -120,18 +120,18 @@
 ## Phase 9: Task Management UI
 > *12 tasks — The core of the app: task list, CRUD forms, filters, pagination.*
 
-- [ ] **9.01** Create `src/hooks/useTasks.ts` — React Query hook: `useQuery` for task list with filter/sort/page params, `useMutation` for create/update/delete with cache invalidation
-- [ ] **9.02** Create `src/pages/DashboardPage.tsx` — Main page composing: TaskFilters, TaskList, Pagination, and a "Create Task" button
-- [ ] **9.03** Create `src/components/tasks/TaskFilters.tsx` — Row of filter controls: Status dropdown (All/Todo/In Progress/Done), Priority dropdown (All/Low/Medium/High), Search input (debounced 300ms), Sort dropdown (Due Date/Created/Priority)
-- [ ] **9.04** Create `src/components/tasks/TaskCard.tsx` — Card displaying title, description (truncated), colored status badge, colored priority badge, due date (with "overdue" highlight if past), action buttons (edit, delete, status toggle)
-- [ ] **9.05** Create `src/components/tasks/TaskList.tsx` — Maps task array to TaskCard grid/list, handles loading (skeleton) and empty states
-- [ ] **9.06** Create `src/components/tasks/TaskForm.tsx` — Reusable form (create + edit mode) inside a Shadcn Dialog/Sheet: title, description textarea, status select, priority select, due date picker. Zod validation.
-- [ ] **9.07** Create `src/components/tasks/TaskSkeleton.tsx` — Skeleton loading cards mimicking TaskCard shape (3-6 skeletons)
-- [ ] **9.08** Create `src/components/tasks/EmptyState.tsx` — Friendly illustration + message for "No tasks yet" and "No results found" scenarios
-- [ ] **9.09** Create `src/components/common/Pagination.tsx` — Page controls: Previous, page numbers, Next, showing "Page X of Y"
-- [ ] **9.10** Create `src/components/common/ConfirmDialog.tsx` — Shadcn AlertDialog for delete confirmation
-- [ ] **9.11** Implement **optimistic updates** for status toggle — Use React Query's `onMutate` to instantly update the cache, `onError` to rollback, `onSettled` to refetch
-- [ ] **9.12** Implement **optimistic delete** — Same pattern: remove from cache instantly, rollback on error
+- [x] **9.01** Create `src/hooks/useTasks.ts` — React Query hook: `useQuery` for task list with filter/sort/page params, `useMutation` for create/update/delete with cache invalidation
+- [x] **9.02** Create `src/pages/DashboardPage.tsx` — Main page composing: TaskFilters, TaskList, Pagination, and a "Create Task" button
+- [x] **9.03** Create `src/components/tasks/TaskFilters.tsx` — Row of filter controls: Status dropdown (All/Todo/In Progress/Done), Priority dropdown (All/Low/Medium/High), Search input (debounced 300ms), Sort dropdown (Due Date/Created/Priority)
+- [x] **9.04** Create `src/components/tasks/TaskCard.tsx` — Card displaying title, description (truncated), colored status badge, colored priority badge, due date (with "overdue" highlight if past), action buttons (edit, delete, status toggle)
+- [x] **9.05** Create `src/components/tasks/TaskList.tsx` — Maps task array to TaskCard grid/list, handles loading (skeleton) and empty states
+- [x] **9.06** Create `src/components/tasks/TaskForm.tsx` — Reusable form (create + edit mode) inside a Shadcn Dialog/Sheet: title, description textarea, status select, priority select, due date picker. Zod validation.
+- [x] **9.07** Create `src/components/tasks/TaskSkeleton.tsx` — Skeleton loading cards mimicking TaskCard shape (3-6 skeletons)
+- [x] **9.08** Create `src/components/tasks/EmptyState.tsx` — Friendly illustration + message for "No tasks yet" and "No results found" scenarios
+- [x] **9.09** Create `src/components/common/Pagination.tsx` — Page controls: Previous, page numbers, Next, showing "Page X of Y"
+- [x] **9.10** Create `src/components/common/ConfirmDialog.tsx` — Shadcn AlertDialog for delete confirmation
+- [x] **9.11** Implement **optimistic updates** for status toggle — Use React Query's `onMutate` to instantly update the cache, `onError` to rollback, `onSettled` to refetch
+- [x] **9.12** Implement **optimistic delete** — Same pattern: remove from cache instantly, rollback on error
 
 ---
 
