@@ -138,10 +138,10 @@
 ## Phase 10: Analytics Dashboard
 > *4 tasks — Stats cards + chart using aggregation API.*
 
-- [ ] **10.01** Create `src/hooks/useAnalytics.ts` — React Query hook for `GET /api/analytics` with appropriate staleTime
-- [ ] **10.02** Create `src/components/analytics/StatsCards.tsx` — Grid of 4 cards: Total Tasks, Completed, Pending, Completion % — with icons and colored accents
-- [ ] **10.03** Install **Recharts**, create `src/components/analytics/CompletionChart.tsx` — Clean donut/pie chart showing Todo vs In Progress vs Done distribution
-- [ ] **10.04** Create `src/pages/AnalyticsPage.tsx` OR integrate analytics section at top of DashboardPage — StatsCards row + CompletionChart + optional priority breakdown bar chart
+- [x] **10.01** Create `src/hooks/useAnalytics.ts` — React Query hook for `GET /api/analytics` with appropriate staleTime
+- [x] **10.02** Create `src/components/analytics/StatsCards.tsx` — Grid of 4 cards: Total Tasks, Completed, Pending, Completion % — with icons and colored accents
+- [x] **10.03** Install **Recharts**, create `src/components/analytics/CompletionChart.tsx` — Clean donut/pie chart showing Todo vs In Progress vs Done distribution
+- [x] **10.04** Create `src/pages/AnalyticsPage.tsx` OR integrate analytics section at top of DashboardPage — StatsCards row + CompletionChart + optional priority breakdown bar chart
 
 ---
 

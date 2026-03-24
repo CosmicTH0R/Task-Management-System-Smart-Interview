@@ -8,19 +8,11 @@ import DashboardLayout from '@/components/layout/DashboardLayout';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
 import DashboardPage from '@/pages/DashboardPage';
-
-// Placeholder — replaced in Phase 10
-function AnalyticsIndex() {
-  return (
-    <div className="flex h-full items-center justify-center">
-      <p className="text-muted-foreground">Analytics coming soon (Phase 10)</p>
-    </div>
-  );
-}
+import AnalyticsPage from '@/pages/AnalyticsPage';
 function NotFoundPage() {
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <h1 className="text-2xl font-bold">404 — Page not found</h1>
+      <h1 className="text-2xl font-bold">404 ï¿½ Page not found</h1>
     </div>
   );
 }
@@ -48,7 +40,7 @@ export default function App() {
         }
       >
         <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/analytics" element={<AnalyticsIndex />} />
+        <Route path="/analytics" element={<AnalyticsPage />} />
       </Route>
 
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
