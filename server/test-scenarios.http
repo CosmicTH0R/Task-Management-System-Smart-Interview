@@ -1,0 +1,235 @@
+### Task Management System API — Manual Test Scenarios
+### VS Code REST Client — install "REST Client" extension by Humao
+###
+### Base URL (change to production URL after deployment)
+@baseUrl = http://localhost:5000/api
+@contentType = application/json
+
+# ──────────────────────────────────────────────────────────────────────────────
+# HEALTH CHECK
+# ──────────────────────────────────────────────────────────────────────────────
+
+### 1. Health check
+GET http://localhost:5000/health
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# AUTH
+# ──────────────────────────────────────────────────────────────────────────────
+
+### 2. Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+###
+
+### 3. Register — duplicate email (expect 409)
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+###
+
+### 4. Register — missing fields (expect 400)
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "nope@example.com"
+}
+
+###
+
+### 5. Login with correct credentials
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+###
+
+### 6. Login — wrong password (expect 401)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "john@example.com",
+  "password": "wrongpassword"
+}
+
+###
+
+### 7. Login — non-existent email (expect 401)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "nobody@example.com",
+  "password": "password123"
+}
+
+###
+
+### 8. Get current user (requires auth cookie from login)
+GET {{baseUrl}}/auth/me
+
+###
+
+### 9. Get current user — no token (expect 401)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer invalid_token
+
+###
+
+### 10. Logout
+POST {{baseUrl}}/auth/logout
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TASKS — CRUD
+# ──────────────────────────────────────────────────────────────────────────────
+
+### 11. Create a task
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "title": "Complete project documentation",
+  "description": "Write README and API docs",
+  "status": "Todo",
+  "priority": "High",
+  "dueDate": "2026-04-01T00:00:00.000Z"
+}
+
+###
+
+### 12. Create a task — missing title (expect 400)
+POST {{baseUrl}}/tasks
+Content-Type: {{contentType}}
+
+{
+  "description": "No title here",
+  "priority": "Low"
+}
+
+###
+
+### 13. Get all tasks
+GET {{baseUrl}}/tasks
+
+###
+
+### 14. Get all tasks — filter by status=Done
+GET {{baseUrl}}/tasks?status=Done
+
+###
+
+### 15. Get all tasks — filter by priority=High
+GET {{baseUrl}}/tasks?priority=High
+
+###
+
+### 16. Get all tasks — search by title keyword
+GET {{baseUrl}}/tasks?search=documentation
+
+###
+
+### 17. Get all tasks — sorted by dueDate ascending
+GET {{baseUrl}}/tasks?sortBy=dueDate&order=asc
+
+###
+
+### 18. Get all tasks — paginated (page 1, 5 per page)
+GET {{baseUrl}}/tasks?page=1&limit=5
+
+###
+
+### 19. Get all tasks — combined filters
+GET {{baseUrl}}/tasks?status=Todo&priority=High&sortBy=createdAt&order=desc&page=1&limit=10
+
+###
+
+### 20. Get task by ID (replace with real ID after creating)
+# @name createdTask
+GET {{baseUrl}}/tasks/REPLACE_WITH_TASK_ID
+
+###
+
+### 21. Get task by invalid ID (expect 400)
+GET {{baseUrl}}/tasks/invalid-id
+
+###
+
+### 22. Update task (PUT)
+PUT {{baseUrl}}/tasks/REPLACE_WITH_TASK_ID
+Content-Type: {{contentType}}
+
+{
+  "title": "Updated documentation title",
+  "priority": "Medium",
+  "status": "In Progress"
+}
+
+###
+
+### 23. Update task status (PATCH)
+PATCH {{baseUrl}}/tasks/REPLACE_WITH_TASK_ID/status
+Content-Type: {{contentType}}
+
+{
+  "status": "Done"
+}
+
+###
+
+### 24. Update status — missing status field (expect 400)
+PATCH {{baseUrl}}/tasks/REPLACE_WITH_TASK_ID/status
+Content-Type: {{contentType}}
+
+{}
+
+###
+
+### 25. Delete task
+DELETE {{baseUrl}}/tasks/REPLACE_WITH_TASK_ID
+
+###
+
+### 26. Delete non-existent task (expect 404)
+DELETE {{baseUrl}}/tasks/000000000000000000000000
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# ANALYTICS
+# ──────────────────────────────────────────────────────────────────────────────
+
+### 27. Get analytics (requires auth)
+GET {{baseUrl}}/analytics
+
+###
+
+### 28. Get analytics — no auth (expect 401)
+GET {{baseUrl}}/analytics
+Authorization: Bearer invalid_token
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 404 HANDLER
+# ──────────────────────────────────────────────────────────────────────────────
+
+### 29. Unknown route (expect 404)
+GET {{baseUrl}}/unknown-route
