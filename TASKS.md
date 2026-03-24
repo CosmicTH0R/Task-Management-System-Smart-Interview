@@ -162,11 +162,11 @@
 ## Phase 12: Error Handling & Edge Cases
 > *5 tasks — Bulletproof the app against every edge case.*
 
-- [ ] **12.01** Handle **token expiry** gracefully — 401 interceptor logs out user, shows toast "Session expired, please login again"
-- [ ] **12.02** Handle **network errors** — Show toast "Network error, please check your connection"
-- [ ] **12.03** Handle **concurrent modifications** — If a task update fails with 404 (deleted by another tab), refetch and notify
-- [ ] **12.04** Add **404 page** — Friendly not-found page with link back to dashboard
-- [ ] **12.05** Verify **input sanitization** — Ensure no XSS via task title/description, MongoDB injection prevention is active
+- [x] **12.01** Handle **token expiry** gracefully — 401 interceptor logs out user, shows toast "Session expired, please login again"
+- [x] **12.02** Handle **network errors** — Show toast "Network error, please check your connection"
+- [x] **12.03** Handle **concurrent modifications** — If a task update fails with 404 (deleted by another tab), refetch and notify
+- [x] **12.04** Add **404 page** — Friendly not-found page with link back to dashboard
+- [x] **12.05** Verify **input sanitization** — Ensure no XSS via task title/description, MongoDB injection prevention is active
 
 ---
 

@@ -38,7 +38,15 @@ export function useUpdateTask() {
       qc.invalidateQueries({ queryKey: [TASKS_KEY] });
       toast.success('Task updated');
     },
-    onError: () => toast.error('Failed to update task'),
+    onError: (error) => {
+      if ((error as { response?: { status?: number } })?.response?.status === 404) {
+        qc.invalidateQueries({ queryKey: [TASKS_KEY] });
+        toast.error('Task no longer exists. The list was refreshed.');
+        return;
+      }
+
+      toast.error('Failed to update task');
+    },
   });
 }
 
@@ -62,10 +70,17 @@ export function useUpdateTaskStatus() {
       );
       return { previousData };
     },
-    onError: (_err, _vars, context) => {
+    onError: (error, _vars, context) => {
       if (context?.previousData) {
         context.previousData.forEach(([key, data]) => qc.setQueryData(key, data));
       }
+
+      if ((error as { response?: { status?: number } })?.response?.status === 404) {
+        qc.invalidateQueries({ queryKey: [TASKS_KEY] });
+        toast.error('Task no longer exists. The list was refreshed.');
+        return;
+      }
+
       toast.error('Failed to update status');
     },
     onSettled: () => qc.invalidateQueries({ queryKey: [TASKS_KEY] }),
@@ -89,10 +104,17 @@ export function useDeleteTask() {
       );
       return { previousData };
     },
-    onError: (_err, _vars, context) => {
+    onError: (error, _vars, context) => {
       if (context?.previousData) {
         context.previousData.forEach(([key, data]) => qc.setQueryData(key, data));
       }
+
+      if ((error as { response?: { status?: number } })?.response?.status === 404) {
+        qc.invalidateQueries({ queryKey: [TASKS_KEY] });
+        toast.error('Task was already removed. The list was refreshed.');
+        return;
+      }
+
       toast.error('Failed to delete task');
     },
     onSuccess: () => toast.success('Task deleted'),
