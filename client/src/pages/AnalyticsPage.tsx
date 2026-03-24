@@ -1,13 +1,16 @@
+import { useEffect } from 'react';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import StatsCards from '@/components/analytics/StatsCards';
 import CompletionChart from '@/components/analytics/CompletionChart';
 import { AlertCircle } from 'lucide-react';
 
 export default function AnalyticsPage() {
+  useEffect(() => { document.title = 'Analytics — TaskFlow'; }, []);
+
   const { data, isLoading, isError, refetch } = useAnalytics();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Analytics</h1>
         <p className="text-sm text-muted-foreground">

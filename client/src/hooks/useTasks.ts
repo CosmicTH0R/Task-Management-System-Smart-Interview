@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import {
   getTasks,
   createTask,
@@ -21,7 +22,11 @@ export function useCreateTask() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (data: CreateTaskInput) => createTask(data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: [TASKS_KEY] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: [TASKS_KEY] });
+      toast.success('Task created');
+    },
+    onError: () => toast.error('Failed to create task'),
   });
 }
 
@@ -29,7 +34,11 @@ export function useUpdateTask() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateTaskInput }) => updateTask(id, data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: [TASKS_KEY] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: [TASKS_KEY] });
+      toast.success('Task updated');
+    },
+    onError: () => toast.error('Failed to update task'),
   });
 }
 
@@ -57,6 +66,7 @@ export function useUpdateTaskStatus() {
       if (context?.previousData) {
         context.previousData.forEach(([key, data]) => qc.setQueryData(key, data));
       }
+      toast.error('Failed to update status');
     },
     onSettled: () => qc.invalidateQueries({ queryKey: [TASKS_KEY] }),
   });
@@ -83,7 +93,9 @@ export function useDeleteTask() {
       if (context?.previousData) {
         context.previousData.forEach(([key, data]) => qc.setQueryData(key, data));
       }
+      toast.error('Failed to delete task');
     },
+    onSuccess: () => toast.success('Task deleted'),
     onSettled: () => qc.invalidateQueries({ queryKey: [TASKS_KEY] }),
   });
 }

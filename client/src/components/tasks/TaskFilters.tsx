@@ -46,7 +46,7 @@ export default function TaskFiltersBar({ filters, onChange }: TaskFiltersBarProp
   const hasActiveFilters = !!(filters.status || filters.priority || filters.search);
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
       {/* Search */}
       <div className="relative min-w-[180px] flex-1">
         <Input
@@ -65,6 +65,8 @@ export default function TaskFiltersBar({ filters, onChange }: TaskFiltersBarProp
           </button>
         )}
       </div>
+
+      <div className="flex flex-wrap gap-2">
 
       {/* Status filter */}
       <Select
@@ -139,6 +141,7 @@ export default function TaskFiltersBar({ filters, onChange }: TaskFiltersBarProp
           Clear
         </Button>
       )}
+      </div>
     </div>
   );
 }

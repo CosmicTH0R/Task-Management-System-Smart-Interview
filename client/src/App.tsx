@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Toaster } from 'sonner';
 import { useAuthStore } from '@/store/authStore';
 import { getMe } from '@/api/auth.api';
 import ProtectedRoute from '@/components/common/ProtectedRoute';
@@ -28,7 +29,14 @@ export default function App() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Routes>
+    <>
+      <Toaster
+        position="top-right"
+        richColors
+        closeButton
+        toastOptions={{ duration: 3000 }}
+      />
+      <Routes>
       <Route path="/login" element={<GuestRoute><LoginPage /></GuestRoute>} />
       <Route path="/signup" element={<GuestRoute><SignupPage /></GuestRoute>} />
 
@@ -46,5 +54,6 @@ export default function App() {
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+    </>
   );
 }

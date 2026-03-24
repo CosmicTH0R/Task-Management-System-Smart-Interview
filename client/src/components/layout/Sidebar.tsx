@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, BarChart2, LogOut, CheckSquare } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { useAuthStore } from '@/store/authStore';
 import { logoutUser } from '@/api/auth.api';
 import { Button } from '@/components/ui/button';
@@ -25,6 +26,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
     mutationFn: logoutUser,
     onSettled: () => {
       logout();
+      toast.success('Signed out');
       navigate('/login', { replace: true });
     },
   });

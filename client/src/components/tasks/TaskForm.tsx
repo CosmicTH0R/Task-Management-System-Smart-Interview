@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Loader2 } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -104,7 +105,7 @@ export default function TaskForm({
             <Label htmlFor="title">Title *</Label>
             <Input id="title" placeholder="Task title" {...register('title')} />
             {errors.title && (
-              <p className="text-xs text-destructive">{errors.title.message}</p>
+              <p className="text-xs text-destructive animate-shake">{errors.title.message}</p>
             )}
           </div>
 
@@ -119,7 +120,7 @@ export default function TaskForm({
               className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
             />
             {errors.description && (
-              <p className="text-xs text-destructive">{errors.description.message}</p>
+              <p className="text-xs text-destructive animate-shake">{errors.description.message}</p>
             )}
           </div>
 
@@ -166,6 +167,7 @@ export default function TaskForm({
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {isLoading ? (isEdit ? 'Saving…' : 'Creating…') : isEdit ? 'Save changes' : 'Create task'}
             </Button>
           </DialogFooter>

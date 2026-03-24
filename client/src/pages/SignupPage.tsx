@@ -1,13 +1,16 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import { registerUser } from '@/api/auth.api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Loader2 } from 'lucide-react';
 
 const signupSchema = z
   .object({
@@ -26,6 +29,8 @@ type SignupFormData = z.infer<typeof signupSchema>;
 export default function SignupPage() {
   const navigate = useNavigate();
 
+  useEffect(() => { document.title = 'Create Account — TaskFlow'; }, []);
+
   const {
     register,
     handleSubmit,
@@ -37,6 +42,7 @@ export default function SignupPage() {
   const mutation = useMutation({
     mutationFn: (data: Omit<SignupFormData, 'confirmPassword'>) => registerUser(data),
     onSuccess: () => {
+      toast.success('Account created! Please sign in.');
       navigate('/login', { replace: true });
     },
   });
@@ -46,7 +52,7 @@ export default function SignupPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-sm animate-fade-in">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Create account</CardTitle>
           <CardDescription>Get started managing your tasks today</CardDescription>
@@ -63,7 +69,7 @@ export default function SignupPage() {
                 {...register('name')}
               />
               {errors.name && (
-                <p className="text-xs text-destructive">{errors.name.message}</p>
+                <p className="text-xs text-destructive animate-shake">{errors.name.message}</p>
               )}
             </div>
 
@@ -77,7 +83,7 @@ export default function SignupPage() {
                 {...register('email')}
               />
               {errors.email && (
-                <p className="text-xs text-destructive">{errors.email.message}</p>
+                <p className="text-xs text-destructive animate-shake">{errors.email.message}</p>
               )}
             </div>
 
@@ -91,7 +97,7 @@ export default function SignupPage() {
                 {...register('password')}
               />
               {errors.password && (
-                <p className="text-xs text-destructive">{errors.password.message}</p>
+                <p className="text-xs text-destructive animate-shake">{errors.password.message}</p>
               )}
             </div>
 
@@ -105,7 +111,7 @@ export default function SignupPage() {
                 {...register('confirmPassword')}
               />
               {errors.confirmPassword && (
-                <p className="text-xs text-destructive">{errors.confirmPassword.message}</p>
+                <p className="text-xs text-destructive animate-shake">{errors.confirmPassword.message}</p>
               )}
             </div>
 
@@ -117,6 +123,7 @@ export default function SignupPage() {
             )}
 
             <Button type="submit" className="w-full" disabled={mutation.isPending}>
+              {mutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {mutation.isPending ? 'Creating account…' : 'Create account'}
             </Button>
           </form>

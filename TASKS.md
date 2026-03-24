@@ -148,14 +148,14 @@
 ## Phase 11: UX Polish & Micro-Interactions
 > *8 tasks — The details that make it feel production-ready.*
 
-- [ ] **11.01** Install **sonner** (toast library), configure `<Toaster />` in App.tsx, add toasts for: task created, task updated, task deleted, login success, errors
-- [ ] **11.02** Add **loading states** on all buttons during mutations (spinner + disabled)
-- [ ] **11.03** Add **form error messages** inline under each field (red text, shake animation)
-- [ ] **11.04** Implement **debounced search** — 300ms debounce on the search input before triggering API call
-- [ ] **11.05** Add **keyboard shortcuts**: Escape to close dialogs, Enter to submit forms
-- [ ] **11.06** Add **responsive design** — Test and fix layout on mobile (375px), tablet (768px), desktop (1280px+)
-- [ ] **11.07** Add **smooth transitions** — Tailwind `transition-all duration-200` on cards, hover effects on buttons, fade-in animations on page load
-- [ ] **11.08** Add **favicon** and proper `<title>` tags per page using `document.title` or react-helmet-async
+- [x] **11.01** Install **sonner** (toast library), configure `<Toaster />` in App.tsx, add toasts for: task created, task updated, task deleted, login success, errors
+- [x] **11.02** Add **loading states** on all buttons during mutations (spinner + disabled)
+- [x] **11.03** Add **form error messages** inline under each field (red text, shake animation)
+- [x] **11.04** Implement **debounced search** — 300ms debounce on the search input before triggering API call
+- [x] **11.05** Add **keyboard shortcuts**: Escape to close dialogs, Enter to submit forms
+- [x] **11.06** Add **responsive design** — Test and fix layout on mobile (375px), tablet (768px), desktop (1280px+)
+- [x] **11.07** Add **smooth transitions** — Tailwind `transition-all duration-200` on cards, hover effects on buttons, fade-in animations on page load
+- [x] **11.08** Add **favicon** and proper `<title>` tags per page using `document.title` or react-helmet-async
 
 ---
 
