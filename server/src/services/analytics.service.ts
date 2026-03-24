@@ -60,15 +60,15 @@ export async function getAnalytics(userId: string) {
     completedTasks,
     pendingTasks,
     completionPercentage,
-    statusBreakdown: {
-      todo: statusMap["Todo"],
-      inProgress: statusMap["In Progress"],
-      done: statusMap["Done"],
-    },
-    priorityBreakdown: {
-      low: priorityMap["Low"],
-      medium: priorityMap["Medium"],
-      high: priorityMap["High"],
-    },
+    statusBreakdown: [
+      { status: "Todo", count: statusMap["Todo"] },
+      { status: "In Progress", count: statusMap["In Progress"] },
+      { status: "Done", count: statusMap["Done"] },
+    ],
+    priorityBreakdown: [
+      { priority: "Low", count: priorityMap["Low"] },
+      { priority: "Medium", count: priorityMap["Medium"] },
+      { priority: "High", count: priorityMap["High"] },
+    ],
   };
 }

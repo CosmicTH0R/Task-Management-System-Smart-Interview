@@ -4,13 +4,20 @@ import { z } from "zod";
 export const TaskStatusEnum = z.enum(["Todo", "In Progress", "Done"]);
 export const TaskPriorityEnum = z.enum(["Low", "Medium", "High"]);
 
+const dueDateSchema = z
+  .string()
+  .refine((value) => !Number.isNaN(Date.parse(value)), {
+    message: "Invalid due date",
+  })
+  .optional();
+
 // Create Task Schema
 export const createTaskSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
   description: z.string().optional(),
   status: TaskStatusEnum.optional(),
   priority: TaskPriorityEnum.optional(),
-  dueDate: z.string().datetime({ message: "Invalid ISO date" }).optional(),
+  dueDate: dueDateSchema,
 });
 
 // Update Task Schema (all fields optional)
@@ -19,7 +26,7 @@ export const updateTaskSchema = z.object({
   description: z.string().optional(),
   status: TaskStatusEnum.optional(),
   priority: TaskPriorityEnum.optional(),
-  dueDate: z.string().datetime({ message: "Invalid ISO date" }).optional(),
+  dueDate: dueDateSchema,
 });
 
 // Query Params Schema
