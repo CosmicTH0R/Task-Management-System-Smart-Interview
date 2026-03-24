@@ -64,7 +64,9 @@ export function useUpdateTaskStatus() {
           if (!old) return old;
           return {
             ...old,
-            data: old.data.map((t) => (t._id === id ? { ...t, status } : t)),
+            data: old.data.map((t) =>
+              t._id === id ? { ...t, status: status as Task["status"] } : t
+            ),
           };
         },
       );
