@@ -90,7 +90,7 @@ export default function CompletionChart({ data, isLoading }: CompletionChartProp
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value: number, name: string) => [value, name]}
+                  formatter={(value, name) => [value ?? 0, name]}
                   contentStyle={{ borderRadius: '8px', fontSize: '12px' }}
                 />
                 <Legend iconType="circle" iconSize={10} />

@@ -1,7 +1,6 @@
 import { format, isPast } from 'date-fns';
 import { Pencil, Trash2, Calendar } from 'lucide-react';
 import type { Task, TaskStatus } from '@/types';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {

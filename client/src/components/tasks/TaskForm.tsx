@@ -25,8 +25,8 @@ import type { Task, CreateTaskInput } from '@/types';
 const taskSchema = z.object({
   title: z.string().min(1, 'Title is required').max(200),
   description: z.string().max(1000).optional(),
-  status: z.enum(['Todo', 'In Progress', 'Done']).default('Todo'),
-  priority: z.enum(['Low', 'Medium', 'High']).default('Medium'),
+  status: z.enum(['Todo', 'In Progress', 'Done']),
+  priority: z.enum(['Low', 'Medium', 'High']),
   dueDate: z.string().optional(),
 });
 
@@ -85,15 +85,26 @@ export default function TaskForm({
   };
 
   const handleFormSubmit = (data: TaskFormData) => {
+    const normalizedDueDate = data.dueDate
+      ? new Date(`${data.dueDate}T00:00:00.000Z`).toISOString()
+      : undefined;
+
     onSubmit({
       ...data,
-      dueDate: data.dueDate || undefined,
+      dueDate: normalizedDueDate,
       description: data.description || undefined,
     });
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
+    <Dialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) {
+          handleClose();
+        }
+      }}
+    >
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>{isEdit ? 'Edit task' : 'Create task'}</DialogTitle>

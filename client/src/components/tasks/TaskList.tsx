@@ -20,7 +20,7 @@ export default function TaskList({
   onDeleteConfirm,
 }: TaskListProps) {
   const { mutate: updateStatus, isPending: isUpdatingStatus } = useUpdateTaskStatus();
-  const { mutate: deleteTask, isPending: isDeleting, variables: deletingId } = useDeleteTask();
+  const { isPending: isDeleting, variables: deletingId } = useDeleteTask();
 
   if (isLoading) return <TaskSkeleton />;
   if (!tasks.length) return <EmptyState type={hasFilters ? 'noResults' : 'empty'} />;
